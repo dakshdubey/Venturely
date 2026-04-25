@@ -64,6 +64,16 @@ export default function ClientDashboard() {
 
     if (loading) return <div className="min-h-screen bg-[#1B1819] flex items-center justify-center text-brand-yellow font-black tracking-[0.5em] uppercase animate-pulse">Initializing Nexus...</div>;
 
+    if (!project) {
+        return (
+            <div className="min-h-screen bg-[#1B1819] flex flex-col items-center justify-center text-center p-6 italic uppercase">
+                <h2 className="text-4xl font-black text-white mb-8 tracking-tighter">Nexus Access <br /><span className="text-brand-yellow">Denied.</span></h2>
+                <p className="text-white/30 text-[10px] font-black tracking-widest mb-12">Authorization token required for structural briefing.</p>
+                <Link href="/login" className="button-pill !text-[10px] !px-12">Request Signature</Link>
+            </div>
+        );
+    }
+
     return (
         <main className="min-h-screen bg-[#1B1819] p-6 lg:p-20 architectural-bg">
             <div className="max-w-7xl mx-auto space-y-12">
