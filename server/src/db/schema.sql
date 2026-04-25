@@ -1,0 +1,60 @@
+CREATE DATABASE IF NOT EXISTS venturely_db;
+USE venturely_db;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'super_admin', 'user') DEFAULT 'user',
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS service_requests (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(20),
+  serviceType VARCHAR(100) NOT NULL,
+  budget VARCHAR(100),
+  description TEXT,
+  status ENUM('pending', 'reviewed', 'quoted', 'rejected') DEFAULT 'pending',
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS quotations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  requestId INT,
+  clientEmail VARCHAR(255) NOT NULL,
+  amount DECIMAL(10, 2) NOT NULL,
+  breakdown JSON,
+  status ENUM('unpaid', 'paid') DEFAULT 'unpaid',
+  qrLink TEXT,
+  pdfUrl TEXT,
+  paymentId VARCHAR(255),
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (requestId) REFERENCES service_requests(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS projects (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  quotationId INT,
+  userId INT,
+  title VARCHAR(255) NOT NULL,
+  status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+  files JSON,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (quotationId) REFERENCES quotations(id) ON DELETE SET NULL,
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS project_updates (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  projectId INT,
+  updateText TEXT NOT NULL,
+  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (projectId) REFERENCES projects(id) ON DELETE CASCADE
+);

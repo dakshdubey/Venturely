@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+:root {
+  /* Elite Architectural Palette */
+  --background: #1B1819;
+  --foreground: #FFFFFF;
+  --brand-yellow: #FFD100;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --radius-xl: 4rem;
+}
+
+@theme {
+  --color-brand-yellow: #FFD100;
+  --color-dark-charcoal: #1B1819;
+  --color-card-bg: #2A2728;
+}
+
+* {
+  border-color: var(--glass-border);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Selection */
+::selection {
+  background-color: var(--brand-yellow);
+  color: #000000;
+}
+
+/* Professional Dot Matrix & Noise System */
+.architectural-bg {
+  position: relative;
+}
+
+.architectural-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 45px 45px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+/* Glossy Effect Layers */
+.glossy-overlay {
+  background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  backdrop-filter: blur(140px);
+  -webkit-backdrop-filter: blur(140px);
+}
+
+.glass-card {
+  @apply bg-white/[0.03] border border-white/10 rounded-[4rem] p-12 shadow-2xl backdrop-blur-3xl transition-all duration-700 hover:bg-white/[0.06] hover:border-white/20;
+}
+
+/* Typography Scale */
+h1,
+h2,
+h3 {
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.font-serif {
+  font-family: var(--font-cormorant), serif;
+}
+
+/* High-End Components */
+.button-pill {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--brand-yellow);
+  color: #000000;
+  padding: 1.25rem 2.5rem;
+  border-radius: 9999px;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-pill:hover {
+  box-shadow: 0 0 40px rgba(255, 209, 0, 0.4);
+}
+
+.button-pill:active {
+  transform: scale(0.95);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-yellow);
+  border-radius: 10px;
+}
+
+/* Smooth Scroll Adjustments */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
