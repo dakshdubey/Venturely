@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/utils/api";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Send, ChevronLeft, Zap } from "lucide-react";
 import Link from "next/link";
 
-export default function NewQuotationPage() {
+function QuotationForm() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -127,5 +127,13 @@ export default function NewQuotationPage() {
                 </div>
             </motion.div>
         </div>
+    );
+}
+
+export default function NewQuotationPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-brand-yellow font-black tracking-[0.5em] uppercase animate-pulse">Initializing Forge Access...</div>}>
+            <QuotationForm />
+        </Suspense>
     );
 }
